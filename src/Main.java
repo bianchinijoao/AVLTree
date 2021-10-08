@@ -24,15 +24,18 @@ public class Main {
                     int numero = Integer.parseInt(scanner.nextLine());
                     String retorno = tree.buscar(numero) ? "Numero encontrado!" : "Numero não encontrado!";
                     System.out.println(retorno);
+                    break;
                 }
                 case "r": {
                     //
                 }
                 case "s": {
                     controle = false;
+                    break;
                 }
                 default:
                     System.out.println("Digite uma entrada válida!");
+                    break;
             }
         }
     }
