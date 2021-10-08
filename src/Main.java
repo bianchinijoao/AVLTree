@@ -14,7 +14,13 @@ public class Main {
             switch (opcao) {
                 case "i": {
                     System.out.println("Digite o elemento a ser inserido: ");
-                    int numero = Integer.parseInt(scanner.nextLine());
+                    int numero;
+                    try {
+                        numero = Integer.parseInt(scanner.nextLine());
+                    } catch(Exception e) {
+                        System.out.println("Voce só pode inserir numeros inteiros!");
+                        break;
+                    }
                     tree.insert(numero);
                     tree.exibeEmOrdem();
                     break;
