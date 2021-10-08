@@ -33,7 +33,12 @@ public class Main {
                     break;
                 }
                 case "r": {
-                    //
+                    System.out.println("Digite o elemento a ser removido: ");
+                    int numero = Integer.parseInt(scanner.nextLine());
+                    tree.removerNodo(numero);
+                    System.out.println("Feito");
+                    tree.exibeEmOrdem();
+                    break;
                 }
                 case "s": {
                     controle = false;
