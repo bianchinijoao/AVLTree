@@ -25,7 +25,14 @@ public class Main {
                     String retorno = tree.buscar(numero) ? "Numero encontrado!" : "Numero não encontrado!";
                     System.out.println(retorno);
                 }
+                case "r": {
+                    //
+                }
+                case "s": {
+                    controle = false;
+                }
                 default:
+                    System.out.println("Digite uma entrada válida!");
             }
         }
     }
@@ -35,5 +42,6 @@ public class Main {
          System.out.println("i - Insercao");
          System.out.println("b - Buscar");
          System.out.println("r - Remover");
+         System.out.println("s - Sair");
     }
 }
