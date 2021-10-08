@@ -58,7 +58,7 @@ public class AVLTree {
     }
 
 
-    //Rotaciona a Sub-�rvore a Direita.
+    //Rotaciona a Sub-arvore a Direita.
     private static AVLNode rotacaoSimplesDireita(AVLNode n2) {
         AVLNode n1 = n2.getEsquerda();
         n2.setEsquerda(n1.getDireita());
@@ -69,7 +69,7 @@ public class AVLTree {
         return n1;
     }
 
-    //Rotaciona a Sub-�rvore a esquerda.
+    //Rotaciona a Sub-arvore a esquerda.
     private static AVLNode rotacaoSimplesEsquerda(AVLNode n1) {
         AVLNode n2 = n1.getDireita();
         n1.setDireita(n2.getEsquerda());
@@ -80,14 +80,14 @@ public class AVLTree {
         return n2;
     }
 
-    //Rotaciona a Sub-�rvore primeiro a esquerda, depois a direita.
+    //Rotaciona a Sub-arvore primeiro a esquerda, depois a direita.
     private static AVLNode rotacaoDuplaDireita(AVLNode n3) {
         n3.setEsquerda(rotacaoSimplesEsquerda(n3.getEsquerda()));
 
         return rotacaoSimplesDireita(n3);
     }
 
-    //Rotaciona a Sub-�rvore primeiro a direita, depois a esquerda.
+    //Rotaciona a Sub-arvore primeiro a direita, depois a esquerda.
     private static AVLNode rotacaoDuplaEsquerda(AVLNode n1) {
         n1.setDireita(rotacaoSimplesDireita(n1.getDireita()));
 
@@ -118,7 +118,6 @@ public class AVLTree {
         }
     }
 
-    // create postorderTraversal() method for traversing AVL Tree in post-order form
     public void exibeEmPosOrdem() {
         exibeEmPosOrdem(raiz);
     }
@@ -155,25 +154,21 @@ public class AVLTree {
     }
 
     private AVLNode removerNodo(AVLNode raiz, int elemento) {
-        // STEP 1: PERFORM STANDARD BST DELETE
+
+        if(raiz.getChave() == elemento && raiz.getAltura() == 0){
+            raiz = null;
+        }
 
         if (raiz == null)
             return raiz;
 
-        // If the elemento to be deleted is smaller than the raiz's elemento,
-        // then it lies in left subtree
         if ( elemento < raiz.getChave() )
             raiz.setEsquerda(removerNodo(raiz.getEsquerda(), elemento));
 
-            // If the elemento to be deleted is greater than the raiz's elemento,
-            // then it lies in right subtree
         else if( elemento > raiz.getChave() )
             raiz.setDireita(removerNodo(raiz.getDireita(), elemento));
 
-            // if elemento is same as raiz's elemento, then This is the node
-            // to be deleted
         else {
-            // node with only one child or no child
             if( (raiz.getEsquerda() == null) || (raiz.getDireita() == null) ) {
 
                 AVLNode avlAux;
@@ -182,57 +177,42 @@ public class AVLTree {
                 else
                     avlAux = raiz.getDireita();
 
-                // No child case
                 if(avlAux == null) {
                     avlAux = raiz;
                     raiz = null;
                 }
-                else // One child case
-                    raiz = avlAux; // Copy the contents of the non-empty child
-
+                else {
+                    raiz = avlAux;
+                }
                 avlAux = null;
             }
             else {
-                // node with two children: Get the inorder successor (smallest
-                // in the right subtree)
                 AVLNode temp = minValueNode(raiz.getDireita());
 
-                // Copy the inorder successor's data to this node
                 raiz.setChave(temp.getChave());
 
-                // Delete the inorder successor
                 raiz.setDireita(removerNodo(raiz.getDireita(), temp.getChave()));
             }
         }
 
-        // If the tree had only one node then return
         if (raiz == null)
             return raiz;
 
-        // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
         raiz.setAltura(Math.max(altura(raiz.getEsquerda()), altura(raiz.getDireita())) + 1);
 
-        // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to check whether
-        //  this node became unbalanced)
         int balance = getFator(raiz);
 
-        // If this node becomes unbalanced, then there are 4 cases
-
-        // Left Left Case
         if (balance > 1 && getFator(raiz.getEsquerda()) >= 0)
             return rotacaoSimplesDireita(raiz);
 
-        // Left Right Case
         if (balance > 1 && getFator(raiz.getEsquerda()) < 0) {
             raiz.setEsquerda(rotacaoSimplesEsquerda(raiz.getEsquerda()));
             return rotacaoSimplesDireita(raiz);
         }
 
-        // Right Right Case
         if (balance < -1 && getFator(raiz.getDireita()) <= 0)
             return rotacaoSimplesEsquerda(raiz);
 
-        // Right Left Case
         if (balance < -1 && getFator(raiz.getDireita()) > 0) {
             raiz.setDireita(rotacaoSimplesDireita(raiz.getDireita()));
             return rotacaoSimplesEsquerda(raiz);
@@ -243,7 +223,7 @@ public class AVLTree {
 
     private AVLNode minValueNode(AVLNode raiz) {
         AVLNode nodo = raiz;
-        /* loop down to find the leftmost leaf */
+
         while (nodo.getEsquerda() != null)
             nodo = nodo.getEsquerda();
         return nodo;
